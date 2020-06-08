@@ -25,7 +25,6 @@ export class FormKavakComponent implements OnInit {
   constructor(private fb: FormBuilder, private countryServices: CountryServiceService) { }
 
   ngOnInit(): void {
-    debugger;
     this.countryServices.getCountries().subscribe(
       countries => {
         this.countries = countries
