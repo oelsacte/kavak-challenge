@@ -1,0 +1,90 @@
+<div class="container sticky-header">
+    <form [formGroup]="contactForm" (ngSubmit)="sendInfo()">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input class="form-control" type="text" id="name" formControlName="name">
+            <ng-container *ngIf="!name.valid && name.touched">
+                <p *ngIf="name.errors.required" class="error-message">
+                    This field is required!!
+                </p>
+                <p *ngIf="name.errors.pattern" class="error-message">
+                    Name must not contain spaces or numbers!!
+                </p>
+            </ng-container>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Surname:</label>
+            <input class="form-control" type="text" id="surname" formControlName="surname">
+            <ng-container *ngIf="!surname.valid && surname.touched">
+                <p *ngIf="surname.errors.required" class="error-message">
+                    This field is required!!
+                </p>
+                <p *ngIf="surname.errors.pattern" class="error-message">
+                    Name must not contain spaces or numbers!!
+                </p>
+            </ng-container>
+        </div>
+
+        <div class="form-group">
+            <label for="name">E-mail:</label>
+            <input class="form-control" type="text" id="email" formControlName="email">
+            <ng-container *ngIf="!email.valid && email.touched">
+                <p *ngIf="email.errors.required" class="error-message">
+                    This field is required!!
+                </p>
+                <p *ngIf="email.errors.pattern" class="error-message">
+                    Email format invalid!!
+                </p>
+            </ng-container>
+        </div>
+        
+        <div class="form-group">
+            <label for="country">Country</label>
+            <select class="form-control" id="country" formControlName="country">
+                <option [value]="country.name" *ngFor="let country of countries">{{country.name}}</option>
+            </select>
+            <ng-container *ngIf="!country.valid && country.touched">
+                <p *ngIf="country.errors.required" class="error-message">
+                    This field is required!!
+                </p>
+            </ng-container>
+        </div>
+        
+        <div class="form-group" formControlName="gander">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="Masculino" value="m" formControlName="gender">
+                <label class="form-check-label" for="inlineRadio1">Masculino</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="Femenino" value="f" formControlName="gender">
+                <label class="form-check-label" for="inlineRadio2">Femenino</label>
+            </div>
+            <ng-container *ngIf="!gender.valid && gender.touched">
+                <p *ngIf="gender.errors.required" class="error-message">
+                    This field is required!!
+                </p>
+            </ng-container>
+        </div>
+        
+        
+        <div class="form-group">
+            <label for="name">Phone:</label>
+            <input class="form-control" type="text" id="phone" formControlName="phone">
+            <ng-container *ngIf="!phone.valid && phone.touched">
+                <p *ngIf="phone.errors.required" class="error-message">
+                    This field is required!!
+                </p>
+                <p *ngIf="phone.errors.pattern" class="error-message">
+                    Phone format invalid!!
+                </p>
+            </ng-container>
+        </div>
+
+        <button class="btn btn-primary" type="submit" [disabled]="contactForm.invalid">
+            Send Info
+        </button>
+    </form>
+
+    <pre>{{contactForm.status}}</pre>
+</div>
