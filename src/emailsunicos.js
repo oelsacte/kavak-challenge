@@ -12,6 +12,3 @@ var emailsUnicos = function(email) {
     }
     return arrAux.toString() + '@' +token[1];
 }
-
-const ex = emailsUnicos('oe.lsa.cte@gmail.com')
-console.log(ex);

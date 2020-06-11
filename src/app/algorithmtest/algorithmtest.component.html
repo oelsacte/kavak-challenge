@@ -1,0 +1,18 @@
+<div class="container col-6">
+    <div class="alert alert-dark" role="alert">
+        <a class="alert-link" [routerLink]="['/']">Regresar a formulario</a>
+    </div>
+    <div class="alert alert-success">
+        <h4 class="alert-heading">Prueba Algoritmo!</h4>
+        <p>En este formulario podran probar la función que se solicitó respecto a la transformación de emails.</p>
+        <hr>
+        <p class="mb-0">src/Emailsunicos.js.</p>
+    </div>
+    <div class="form-group">
+        <label for="name">Introduzca su correo electrónico:</label>
+        <input class="form-control" type="email" name="correo" [(ngModel)]="correo">
+        <button class="form-control btn btn-primary" (click)="transformEmail()">Enviar</button>
+        <hr>
+        <p *ngIf="nvoCorreo"> Su email verificado {{nvoCorreo}}</p>
+    </div>
+</div>

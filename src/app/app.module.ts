@@ -6,17 +6,20 @@ import { AppComponent } from './app.component';
 import { FormKavakComponent } from './form-kavak/form-kavak.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AlgorithmtestComponent } from './algorithmtest/algorithmtest.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FormKavakComponent
+    FormKavakComponent,
+    AlgorithmtestComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     NgbModule
   ],
