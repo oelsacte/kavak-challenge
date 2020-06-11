@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CountryServiceService } from '../services/country-service.service';
+import { zip } from 'rxjs';
+import { filter, map, tap } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form-kavak',
@@ -11,7 +14,9 @@ export class FormKavakComponent implements OnInit {
 
   public countries: any;
 
-  private regEmail = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  private MSG_SUCCESS = 'Formulario llenado exitosamente';
+
+  private MSG_TITLE_SUCCESS = 'Genial!!'
 
   public contactForm = this.fb.group({
     name: ['', [Validators.required, Validators.pattern(/^[ñA-Za-z]*[ñA-Za-z][ñA-Za-z]*$/) ]],
@@ -19,21 +24,38 @@ export class FormKavakComponent implements OnInit {
     email: ['', [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
     country: ['', [Validators.required]],
     gender: ['', [Validators.required]],
-    phone: ['', [Validators.required, Validators.pattern(/(\(\d{3}\)[.-]?|\d{3}[.-]?)?\d{3}[.-]?\d{4}/)]]
+    phone: ['', [Validators.required, Validators.pattern(/^\(\d{2}\)\d{3}-\d{3}-\d{2}$/)]]
   })
 
   constructor(private fb: FormBuilder, private countryServices: CountryServiceService) { }
 
   ngOnInit(): void {
+    const contact = localStorage.getItem('contact');
+
     this.countryServices.getCountries().subscribe(
       countries => {
         this.countries = countries
       }
     )
+
+    if(contact){
+      const contactJSON = JSON.parse(contact);
+      this.contactForm.setValue(contactJSON);
+    }
+
+    zip(this.contactForm.statusChanges, this.contactForm.valueChanges).pipe(
+      filter( ([state, value]) => state == 'VALID' ),
+      map(([state, value]) => value),
+      tap(data => console.log(data)),
+    ).subscribe(formValue => {
+      localStorage.setItem('contact', JSON.stringify(formValue));
+    });
   }
 
   sendInfo(){
-    alert('The form is valid')
+    Swal.fire(this.MSG_SUCCESS, this.MSG_TITLE_SUCCESS, 'success');
+    this.contactForm.reset();
+    localStorage.removeItem('contact');
   }
 
   get name(){
